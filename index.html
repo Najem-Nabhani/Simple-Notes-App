@@ -1,0 +1,77 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="Style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+
+    $(document).ready(
+        function(){
+
+            $('.Add').click(function(){
+
+                var NoteElement = $('<div class="Note"> <div> New Note.</div> <button class="btn btn-danger Remove">-</button> </div>');
+                //NoteElement.attr('class', 'Note');
+                NoteElement.click( 
+                    function(){
+                        EditNote(this);
+                 });
+
+                $('.FullPage').append(NoteElement)
+
+
+                //Give defintion of for method
+                $('.Remove').click(function(){
+                    $(this).parent().remove();
+                });
+
+            });
+
+            function EditNote(elem){
+
+                var ContentText = $(elem).children('div').text();
+
+                $(elem).children('div').html('<textarea id="texts" autofocus class="form-control">'+ContentText+'</textarea>');
+                
+                $(elem).animate({
+                    height: '200px',                    
+                });
+
+                $(elem).unbind('click');
+
+                $(elem).on('blur', '#texts', function () {
+                    ContentText = $(this).val();
+                    $(elem).animate({
+                    height: '100px',                    
+                    });
+                    $(elem).children('div').html('<div>'+ContentText+'</div>');
+                    $(elem).bind('click' , function(){ EditNote(this); });
+                });                
+            }
+
+            $('.Remove').click(function(){
+                    $(this).parent().remove();
+            });
+        }
+    );
+
+    
+    
+  
+
+</script>
+
+<body>
+    
+    <h3 class="Header"> Simple Notes App </h3>
+
+    <div class="FullPage container">
+            <div class="Note"> New Note 
+                    <button class="btn btn-danger Remove">-</button>
+            </div>
+            
+    </div>
+
+    <button class="Add btn btn-success">+</button>
+    <!--button class="Remove btn btn-danger">-</button-->
+    
+</body>
